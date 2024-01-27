@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rgistrattion</title>
+</head>
+<body>
+    <h1>User Registration</h1>
+    <form name="reg-frm">
+        <table cellpadding="7">
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="full_name" required pattern="[A-Za-z]{}" title="Please enter valid name" placeholder="Enter your name"></td>
+            </tr>
+            <tr>
+                <td>Email-ID</td>
+                <td><input type="email" name="email_id" required placeholder="Enter your email"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="password" name="pwd" required placeholder="Enter your password"></td>
+            </tr>
+            <tr>
+                <td>Date of Birth</td>
+                <td><input type="date" name="dob" required></td>
+            </tr>
+            <tr>
+                <td>Contact Number</td>
+                <td><input type="text" name="mobile" required pattern="[0-9]{10}" title="Please enter a valid mobile number" placeholder="Enter your mobile number"></td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <input type="radio" name="gender" value="Male" checked>Male
+                    <input type="radio" name="gender" value="Female">Female
+                </td>
+            </tr>
+            <tr>
+                <td>Language</td>
+                <td>
+                    <input type="checkbox" name="lang" value="C" checked>C
+                    <input type="checkbox" name="lang" value="C++" checked>C++
+                    <input type="checkbox" name="lang" value="Python" checked>Python
+                </td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>
+                <textarea name="address" cols="30" rows="7" required placeholder="Enter your address"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td>
+                    <select name="city">
+                        <option value="Chennai">Chennai</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Kolkata">Kolkata</option>
+                        <option value="Mumbai">Mumbai</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Select File</td>
+                <td><input type="file" name="ff" required></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="reset" name="rs" value="Reset">
+                    &nbsp; &nbsp;&nbsp;
+                    <input type="submit" name="ok" value="Register">
+                </td>
+            </tr>
+        </table>  
+    </form>
+</body>
+</html>
