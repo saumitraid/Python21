@@ -1,0 +1,36 @@
+{% load static %} <!-- Django template tags -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS-4</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/css/mystyle.css' %}">
+</head>
+<body>
+    <nav class="menu">
+        <ul>
+            <li>
+                <a href="{% url 'home-page' %}" class="active">Home</a>
+            </li>
+            <li>
+                <a href="{% url 'about-page' %}">About</a>
+            </li>
+            <li>
+                <a href="{% url 'contact-page' %}">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="wrapper">
+        <div class="container container-margin bg-red">
+            1
+        </div>
+        <div class="container container-margin bg-yellow">
+            2
+        </div>
+        <div class="container bg-green">
+            3
+        </div>
+    </div>
+</body>
+</html>
