@@ -1,0 +1,56 @@
+{% load static %} <!-- Django template tags -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/css/mystyle.css' %}">
+</head>
+<body>
+    <nav class="menu">
+        <ul>
+            <li>
+                <a href="{% url 'home-page' %}">Home</a>
+            </li>
+            <li>
+                <a href="{% url 'about-page' %}" class="active">About</a>
+            </li>
+            <li>
+                <a href="{% url 'contact-page' %}">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="wrapper">
+        <h1>All Students</h1>
+        {% if allStudent %}
+        <table cellpadding="10" cellspacing="0" border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rec in allStudent %}
+                <tr>
+                    <td>{{rec.name}}</td>   
+                    <td>{{rec.email_id}}</td>
+                    <td>{{rec.city}}</td>      
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <h2>Sorry no student details found</h2>
+        {% endif %}
+
+        {% if messages %}
+           {% for msg in messages %}
+                {{msg}}
+           {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -34,14 +34,27 @@
                     <td><input type="email" name="email_id"></td>
                 </tr>
                 <tr>
+                    <td>City</td>
+                    <td>
+                        <select name="city">
+                            <option value="Delhi">Delhi</option>
+                            <option value="Kolkata">Kolkata</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Patna">Patna</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td colspan="2" align="center">
                         <input type="submit" value="Submit">
                     </td>
                 </tr>
             </table>
         </form>
-        {% if name and email_id %}
-           <h4>Your name is {{name}} and email is {{email_id}}</h4>
+        {% if messages %}
+           {% for msg in messages %}
+                {{msg}}
+           {% endfor %}
         {% endif %}
     </div>
 </body>
