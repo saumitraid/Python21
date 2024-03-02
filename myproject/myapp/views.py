@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from . models import Student
+from . forms import MyRegFrm
 
 # Create your views here.
 
@@ -36,3 +37,32 @@ def contact(request):
         return render(request, 'myapp/contact.html')
     else:
         return render(request, 'myapp/contact.html')
+
+def updateData(request, id):
+    if request.POST:
+        name=request.POST.get('name')
+        email_id=request.POST.get('email_id')
+        city=request.POST.get('city')
+        try:
+            Student.objects.filter(id=id).update(name=name, email_id=email_id, city=city)
+            messages.success(request, 'Student data update successfully')
+            return redirect('/about')
+        except Exception as e:
+            messages.error(request, 'Student data not update successfully')
+            return redirect('/about')
+    else:
+        # Select * FROM student WHERE id=id
+        std=Student.objects.filter(id=id).get()
+        return render(request, 'myapp/update.html', {'std':std})
+
+def deleteData(request, id):
+    try:
+        Student.objects.filter(id=id).delete()
+        messages.success(request, 'Student data delete successfully')
+    except Exception as e:
+        messages.error(request, 'Student data not delete successfully')
+    return redirect('/about')
+
+def userReg(request):
+    form=MyRegFrm()
+    return(request, 'myapp/reg.html')

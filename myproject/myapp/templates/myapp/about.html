@@ -30,6 +30,8 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>City</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,7 +39,9 @@
                 <tr>
                     <td>{{rec.name}}</td>   
                     <td>{{rec.email_id}}</td>
-                    <td>{{rec.city}}</td>      
+                    <td>{{rec.city}}</td>
+                    <td><a href="/update/{{rec.id}}">Update</a></td>   
+                    <td><a href="/delete/{{rec.id}}">Delete</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
