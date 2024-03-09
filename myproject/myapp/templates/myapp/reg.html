@@ -11,11 +11,25 @@
 </head>
 <body>
     <div class="container">
+        <h2 class="text-center text-primary">User Registration</h2>
         <div class="col-6">
-            <form name="reg-frm" method="post">
+            <form name="reg-frm" method="post" novalidate>
                 {% csrf_token %}
+                {% for frm in form %}
+                <div class="form-group">
+                {{frm.label_tag}} &nbsp;&nbsp;&nbsp;&nbsp; <span class="text-danger">{{frm.errors | striptags}}</span>
+                {{frm}}
+                </div>
+                {% endfor %}
                 <input type="submit" value="Registration" class="btn btn-primary">
             </form>
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="alert alert-success">
+                {{msg}}
+            </div>
+            {% endfor %}
+            {% endif %}
         </div>
     </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

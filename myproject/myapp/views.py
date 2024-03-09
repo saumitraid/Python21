@@ -64,5 +64,14 @@ def deleteData(request, id):
     return redirect('/about')
 
 def userReg(request):
-    form=MyRegFrm()
-    return(request, 'myapp/reg.html')
+    if request.POST:
+        form=MyRegFrm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                messages.success(request, 'Registration is successfull')
+            except Exception :
+                messages.error(request, 'Registration is unsuccessfull')
+    else:
+        form=MyRegFrm()
+    return render(request, 'myapp/reg.html',{'form':form})
