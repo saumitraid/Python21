@@ -8,4 +8,6 @@ urlpatterns = [
     path('update/<int:id>', views.updateData, name='update-page'),
     path('delete/<int:id>', views.deleteData, name='delete-page'),
     path('reg/', views.userReg, name='reg-page'),
+    path('login/', views.userLog, name='log-page'),
+    path('logout/', views.userLogout, name='log-out-page'),
 ]

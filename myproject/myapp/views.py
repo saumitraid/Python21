@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from . models import Student
-from . forms import MyRegFrm
+from . forms import MyRegFrm, MyLogFrm
 
 # Create your views here.
 
 def home(request):
-    return render(request, 'myapp/home.html')
+    if request.user.is_authenticated:
+        return render(request, 'myapp/home.html')
+    else:
+        return redirect('/login/')
 
 def about(request):
     allStudent=Student.objects.all()
@@ -75,3 +79,23 @@ def userReg(request):
     else:
         form=MyRegFrm()
     return render(request, 'myapp/reg.html',{'form':form})
+
+
+def userLog(request):
+    if request.POST:
+        form=MyLogFrm(request=request, data=request.POST)
+        if form.is_valid():
+            uname=form.cleaned_data['username']
+            upass=form.cleaned_data['password']
+            user=authenticate(username=uname, password=upass)
+            if user is not None:
+                login(request, user)
+                return redirect('/')
+        
+    else:
+        form=MyLogFrm()
+    return render(request, 'myapp/log.html', {'form':form})
+
+def userLogout(request):
+    logout(request)
+    return redirect('/login/')

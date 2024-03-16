@@ -1,0 +1,35 @@
+{% if request.user.is_authenticated %}
+<nav class="menu">
+    <ul>
+        <li>
+            <a href="{% url 'home-page' %}" class="active">Home</a>
+        </li>
+        <li>
+            <a href="{% url 'about-page' %}">About</a>
+        </li>
+        <li>
+            <a href="{% url 'contact-page' %}">Contact</a>
+        </li>
+        <li>
+            <a href="{% url 'log-out-page' %}">Logout</a>
+        </li>
+    </ul>
+</nav>
+{% else %}
+<nav class="menu">
+    <ul>
+        <li>
+            <a href="{% url 'home-page' %}" class="active">Home</a>
+        </li>
+        <li>
+            <a href="{% url 'about-page' %}">About</a>
+        </li>
+        <li>
+            <a href="{% url 'contact-page' %}">Contact</a>
+        </li>
+        <li>
+            <a href="{% url 'log-page' %}">Login</a>
+        </li>
+    </ul>
+</nav>
+{% endif %}

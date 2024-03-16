@@ -8,19 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'myapp/css/mystyle.css' %}">
 </head>
 <body>
-    <nav class="menu">
-        <ul>
-            <li>
-                <a href="{% url 'home-page' %}">Home</a>
-            </li>
-            <li>
-                <a href="{% url 'about-page' %}" class="active">About</a>
-            </li>
-            <li>
-                <a href="{% url 'contact-page' %}">Contact</a>
-            </li>
-        </ul>
-    </nav>
+    {% include './nav.html' %}
     <div class="wrapper">
         <h1>All Students</h1>
         {% if allStudent %}
