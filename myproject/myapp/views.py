@@ -2,16 +2,15 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from . models import Student
+from . models import Student, Product, CartItem
 from . forms import MyRegFrm, MyLogFrm
 
 # Create your views here.
 
 def home(request):
-    if request.user.is_authenticated:
-        return render(request, 'myapp/home.html')
-    else:
-        return redirect('/login/')
+    products=Product.objects.all()
+    return render(request, 'myapp/home.html', {'products':products})
+    
 
 def about(request):
     allStudent=Student.objects.all()
@@ -99,3 +98,31 @@ def userLog(request):
 def userLogout(request):
     logout(request)
     return redirect('/login/')
+
+def add_to_cart(request, product_id):
+	if request.user.is_authenticated:
+		product = Product.objects.get(id=product_id)
+		cart_item, created = CartItem.objects.get_or_create(product=product, 
+                                                        user=request.user)
+		cart_item.quantity += 1
+		cart_item.save()
+		return redirect('/cart')
+	else:
+		return redirect('/login')
+
+def view_cart(request):
+	if request.user.is_authenticated:
+		cart_items = CartItem.objects.filter(user=request.user)
+		total_price = sum(item.product.price * item.quantity for item in cart_items)
+		total_price=int(total_price)
+		return render(request, 'myapp/cart.html', {'cart_items': cart_items, 'total_price': total_price})
+	else:
+		return redirect('/login')
+     
+def remove_cart(request,id):
+    if request.user.is_authenticated:
+        cart_item = CartItem.objects.get(id=id, user=request.user)
+        cart_item.delete()
+        return redirect('/cart')
+    else:
+        return redirect('/login')
