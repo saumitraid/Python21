@@ -36,3 +36,12 @@ class CartItem(models.Model):
 
 	def __str__(self):
 		return f'{self.quantity} x {self.product.name}'
+
+class Order(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    payment_status=models.CharField(max_length=255)
+    payment_id=models.CharField(max_length=255)
+    address=models.TextField()

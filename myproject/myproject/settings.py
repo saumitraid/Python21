@@ -134,3 +134,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL='myapp.CustomUser'
+
+RAZORPAY_API_KEY = 'rzp_test_jIctH4BZwcxQXF'
+RAZORPAY_API_SECRET = 'zAh1TuOegxlNpTdb8Qzl0Kn6'
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
