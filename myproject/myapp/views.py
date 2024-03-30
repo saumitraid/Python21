@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from . models import Student, Product, CartItem
-from . forms import MyRegFrm, MyLogFrm
+from . forms import MyRegFrm, MyLogFrm, MyChngFrm
 
 # Create your views here.
 
@@ -126,3 +126,20 @@ def remove_cart(request,id):
         return redirect('/cart')
     else:
         return redirect('/login')
+
+
+def chngPro(request):
+    if request.user.is_authenticated:
+        if request.POST:
+            form = MyChngFrm(request.POST, instance=request.user)
+            if form.is_valid():
+                try:
+                    form.save()
+                    messages.success(request,'Profile Update successfully')
+                except Exception as e:
+                    messages.error(request, 'Profile Could Not Update successfully')
+        else:
+            form=MyChngFrm(instance=request.user)
+        return render(request, 'myapp/changePro.html', {'form':form})
+    else:
+        return redirect('/login')  

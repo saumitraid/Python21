@@ -2,6 +2,9 @@
 <nav class="menu">
     <ul>
         <li>
+            <a href="{% url 'home-page' %}">{{request.user.get_full_name}}</a>
+        </li>
+        <li>
             <a href="{% url 'home-page' %}" class="active">Home</a>
         </li>
         <li>
@@ -9,6 +12,9 @@
         </li>
         <li>
             <a href="{% url 'contact-page' %}">Contact</a>
+        </li>
+        <li>
+            <a href="{% url 'chng-pro' %}">Change Profile</a>
         </li>
         <li>
             <a href="{% url 'log-out-page' %}">Logout</a>
