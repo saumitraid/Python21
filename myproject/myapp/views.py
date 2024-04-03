@@ -1,9 +1,13 @@
+import razorpay
+from django.conf import settings
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from . models import Student, Product, CartItem
+from . models import Student, Product, CartItem, Order
 from . forms import MyRegFrm, MyLogFrm, MyChngFrm
+
 
 # Create your views here.
 
@@ -142,4 +146,56 @@ def chngPro(request):
             form=MyChngFrm(instance=request.user)
         return render(request, 'myapp/changePro.html', {'form':form})
     else:
-        return redirect('/login')  
+        return redirect('/login')
+
+
+def initiate_payment(request):
+    if request.method == "POST":
+        amount = int(request.POST["amount"]) * 100  # Amount in paise
+        address=request.POST['address']
+        client = razorpay.Client(auth=(settings.RAZORPAY_API_KEY, settings.RAZORPAY_API_SECRET))
+
+        payment_data = {
+            "amount": amount,
+            "currency": "INR",
+            "receipt": "order_receipt",
+            "notes": {
+                "email": "user_email@example.com",
+            },
+        }
+
+        order = client.order.create(data=payment_data)
+        
+        # Include key, name, description, and image in the JSON response
+        response_data = {
+            "id": order["id"],
+            "amount": order["amount"],
+            "currency": order["currency"],
+            "key": settings.RAZORPAY_API_KEY,
+            "name": "My Project",
+            "description": "Payment for Your Product",
+            "image": "https://yourwebsite.com/logo.png",  # Replace with your logo URL
+        }
+        cart_items=CartItem.objects.filter(user=request.user)
+        # payment_id=response_data.id
+        for cart in cart_items:
+            Order.objects.get_or_create(user=request.user, product= cart.product, quantity=cart.quantity, payment_status='success', address=address)
+        
+        CartItem.objects.filter(user=request.user).delete()
+
+        return JsonResponse(response_data)
+    return redirect('myapp:viewCart.html')
+
+def payment_success(request):
+    return render(request, "myapp/payment_success.html")
+
+def payment_failed(request):
+    return render(request, "myapp/payment_failed.html")
+
+
+def myOrders(request):
+    if request.user.is_authenticated:
+        allord=Order.objects.filter(user=request.user)
+        return render(request, 'myapp/viewOrders.html',{'orderItems':allord})
+    else:
+        return redirect('/login')

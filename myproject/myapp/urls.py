@@ -14,4 +14,8 @@ urlpatterns = [
     path('cart', views.view_cart, name='view_cart'),
     path('remove/<int:id>', views.remove_cart, name='remove_cart'),
     path('chngpro', views.chngPro, name='chng-pro'),
+    path("initiate-payment/", views.initiate_payment, name="initiate_payment"),
+    path("payment-success/", views.payment_success, name="payment_success"),
+    path("payment-failed/", views.payment_failed, name="payment_failed"),
+    path("myorder/", views.myOrders, name="my-orders"),
 ]
